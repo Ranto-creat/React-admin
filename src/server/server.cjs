@@ -1,26 +1,19 @@
-const jsonServer = require("ra-data-json-server");
+const jsonServer = require("json-server");
 const server = jsonServer.create();
 const router = jsonServer.router("db.json");
-const middlewares = jsonServer.default.defaults();
+const middlewares = jsonServer.defaults();
 
 server.use(middlewares);
-server.use(jsonServer.bodyParser);
 
-// Exemple de middleware pour modifier les requêtes
-server.use((req, _, next) => {
-    if (req.method === "POST") {
-        req.body.createdAt = Date.now();
-    }
+// Middleware pour ajouter l'en-tête X-Total-Count
+server.use((req, res, next) => {
+    res.header("Access-Control-Expose-Headers", "X-Total-Count");
     next();
 });
 
 server.use(router);
 
-const PORT = 3001;
-server.listen(PORT, () => {
-    console.log(`✅ JSON Server is running on http://localhost:${PORT}`);
+server.listen(3004, () => {
+    console.log("✅ JSON Server tourne sur le port 3004");
 });
 
-
-
-// json-server --watch data.json --port 3001
