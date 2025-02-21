@@ -1,19 +1,105 @@
-// import {  CreateParams, CreateResult, DataProvider, DeleteManyParams, DeleteManyResult, DeleteParams, DeleteResult, GetListParams, GetListResult, GetManyParams, GetManyReferenceParams, GetManyReferenceResult, GetManyResult, GetOneParams, GetOneResult, Identifier, QueryFunctionContext, RaRecord, UpdateManyParams, UpdateManyResult, UpdateParams, UpdateResult  } from "react-admin";
-// import { data } from "react-router";
+import {
+  CreateParams,
+  CreateResult,
+  DataProvider,
+  DeleteManyParams,
+  DeleteManyResult,
+  DeleteParams,
+  DeleteResult,
+  GetListParams,
+  GetListResult,
+  GetManyParams,
+  GetManyReferenceParams,
+  GetManyReferenceResult,
+  GetManyResult,
+  GetOneParams,
+  GetOneResult,
+  Identifier,
+  QueryFunctionContext,
+  RaRecord,
+  UpdateManyParams,
+  UpdateManyResult,
+  UpdateParams,
+  UpdateResult,
+} from "react-admin";
+import postDataProvider from "./pages/dataProvider/post-data-provider";
+import { userDataProvider } from "./pages/dataProvider/users-data-provider";
 
-// export const dataprovider: DataProvider = {
-//   getList: async (resource: string): Promise<GetListResult<any>> => {
-//     if (resource === "posts") {
-//       const data = await fetch("https://jsonplaceholder.typicode.com/posts", {method: 'GET'});
-//       const posts = await data.json();
-//       return { data: posts, total: posts.length };
-//     }
-//     return { data: [], total: 0 };
-//   }
-// };
 
+const getDataProvider = (resource: string) => {
+  switch (resource) {
+    case "users":
+      return userDataProvider;
+    case "posts":
+      return postDataProvider;
+    default:
+      throw new Error("No data provider");
+  }
+};
 
-// https://jsonplaceholder.typicode.com/posts
-import jsonServerProvider from 'ra-data-json-server';
+export const dataProvider: DataProvider = {
+  getList: async function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: GetListParams & QueryFunctionContext,
+  ): Promise<GetListResult<RecordType>> {
+    const currentDataProvider = getDataProvider(resource);
+    return currentDataProvider.getList(params);
+  },
+  getOne: async function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: GetOneParams<RecordType> & QueryFunctionContext,
+  ): Promise<GetOneResult<RecordType>> {
+    const currentDataProvider = getDataProvider(resource);
+    return currentDataProvider.getOne(params);
+  },
+  update: async function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: UpdateParams,
+  ): Promise<UpdateResult<RecordType>> {
+    const currentDataProvider = getDataProvider(resource);
+    return currentDataProvider.update(params);
+  },
+  getMany: function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: GetManyParams<RecordType> & QueryFunctionContext,
+  ): Promise<GetManyResult<RecordType>> {
+    throw new Error("Function not implemented.");
+  },
+  getManyReference: function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: GetManyReferenceParams & QueryFunctionContext,
+  ): Promise<GetManyReferenceResult<RecordType>> {
+    throw new Error("Function not implemented.");
+  },
+  updateMany: function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: UpdateManyParams,
+  ): Promise<UpdateManyResult<RecordType>> {
+    throw new Error("Function not implemented.");
+  },
+  create: function <
+    RecordType extends Omit<RaRecord, "id"> = any,
+    ResultRecordType extends RaRecord = RecordType & { id: Identifier },
+  >(
+    resource: string,
+    params: CreateParams,
+  ): Promise<CreateResult<ResultRecordType>> {
+    throw new Error("Function not implemented.");
+  },
+  delete: function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: DeleteParams<RecordType>,
+  ): Promise<DeleteResult<RecordType>> {
+    throw new Error("Function not implemented.");
+  },
+  deleteMany: function <RecordType extends RaRecord = any>(
+    resource: string,
+    params: DeleteManyParams<RecordType>,
+  ): Promise<DeleteManyResult<RecordType>> {
+    throw new Error("Function not implemented.");
+  },
+};
 
-export const dataProvider = jsonServerProvider(import.meta.env.VITE_JSON_URL,);
+// import jsonServerProvider from 'ra-data-json-server';
+
+// export const dataProvider = jsonServerProvider(import.meta.env.VITE_JSON_URL,);
