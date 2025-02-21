@@ -22,8 +22,8 @@ import {
   UpdateParams,
   UpdateResult,
 } from "react-admin";
-import postDataProvider from "./pages/dataProvider/post-data-provider";
-import { userDataProvider } from "./pages/dataProvider/users-data-provider";
+import postDataProvider from "./dataProvider/post-data-provider";
+import { userDataProvider } from "./dataProvider/users-data-provider";
 
 
 const getDataProvider = (resource: string) => {
