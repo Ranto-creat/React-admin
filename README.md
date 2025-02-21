@@ -1,53 +1,44 @@
-# admin-app
+# Admin App
 
 ## Installation
 
-Install the application dependencies by running:
+To set up the application, follow these steps:
+
+1. **Clone the repository and install dependencies:**
+
+   ```sh
+   git clone https://github.com/Ranto-creat/React-admin
+   npm install
+   ```
+
+2. **Set up the JSON server:**
+
+   Open a new terminal and navigate to the server folder:
+
+   ```sh
+   cd React-admin/src/server/
+   json-server --watch db.json -p 3004
+   ```
+
+3. **Start the React application:**
+
+   In a new terminal, navigate to the application directory and run:
+
+   ```sh
+   cd React-admin/
+   npm run dev
+   ```
+
+### Output
+
+You should see output similar to this:
 
 ```sh
-npm install
+  VITE v5.4.14  ready in 1255 ms
+
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://192.168.42.205:5173/
+  ➜  press h + enter to show help
 ```
 
-## Development
-
-Start the application in development mode by running:
-
-```sh
-npm run dev
-```
-
-## Production
-
-Build the application in production mode by running:
-
-```sh
-npm run build
-```
-
-## DataProvider
-
-The included data provider use [FakeREST](https://github.com/marmelab/fakerest) to simulate a backend.
-You'll find a `data.json` file in the `src` directory that includes some fake data for testing purposes.
-
-It includes two resources, posts and comments.
-Posts have the following properties: `id`, `title` and `content`.
-Comments have the following properties: `id`, `post_id` and `content`.
-
-## Tests
-
-You can run the included tests with the following command:
-
-```sh
-npm run test
-# or
-yarn run test
-```
-## Authentication
-
-The included auth provider should only be used for development and test purposes.
-You'll find a `users.json` file in the `src` directory that includes the users you can use.
-
-You can sign in to the application with the following usernames and password:
-- janedoe / password
-- johndoe / password
-
+---
