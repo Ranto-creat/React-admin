@@ -6,7 +6,7 @@ const PostList = () => (
       <TextField source="id" />
       <TextField source="title" label="post title"/>
       <TextField source="body" />
-      <ReferenceField source="userId" reference="users" />
+      {/* <ReferenceField source="userId" reference="users" /> */}
       <EditButton/>
     </Datagrid>
   </List>

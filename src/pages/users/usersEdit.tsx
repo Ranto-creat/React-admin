@@ -1,4 +1,4 @@
-import { CreateButton, Edit, SimpleForm, TextInput } from "react-admin";
+import { Edit, SimpleForm, TextInput } from "react-admin";
 
 const UserEdit = () => (
   <Edit>
@@ -9,7 +9,6 @@ const UserEdit = () => (
       <TextInput source="email" />
       <TextInput source="address.street" />
       <TextInput source="phone" />
-      <CreateButton/>
     </SimpleForm>
   </Edit>
 );
